@@ -1,0 +1,201 @@
+# Precision RF Generator & GPSDO (Si5351A + Arduino Nano + NEO-6M)
+
+[![Arduino](https://img.shields.io/badge/Platform-Arduino-00979D?logo=arduino&logoColor=white)](https://www.arduino.cc/)
+[![AVR](https://img.shields.io/badge/MCU-ATmega328P-blue.svg)](https://www.microchip.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub](https://img.shields.io/badge/Status-Tested%20%26%20Working-brightgreen.svg)]()
+
+A high-precision, lab-grade RF signal synthesizer and **GPS-Disciplined Oscillator (GPSDO)** covering **8 kHz to 160 MHz** using an **Arduino Nano (ATmega328P)**, **Silicon Labs Si5351A**, and a **u-blox NEO-6M GPS** module.
+
+The system implements a closed-loop **Frequency Locked Loop (FLL)** using the GPS **1PPS (Pulse Per Second)** timebase and the ATmega328P's hardware Timer1 counter. It measures crystal offset in **parts-per-billion (ppb)** and continuously disciplines the Si5351 to cancel out temperature drift and manufacturing tolerance, achieving stability better than **0.05–0.1 ppm** (< 50–100 ppb).
+
+---
+
+## 🌟 Key Features
+
+* **Wide Frequency Coverage**: 8 kHz to 160 MHz with 1 Hz tuning steps.
+* **Dual Independent RF Outputs**:
+  * **CLK0 (Primary)**: Precision lab bench output / master reference clock (Default: 10.000 000 MHz).
+  * **CLK1 (Auxiliary)**: Secondary configurable RF output (Default: 14.074 000 MHz — 20m FT8).
+* **Hardware-Gated Frequency Auto-Calibration (FLL)**:
+  * **CLK2** outputs a 1.000 000 MHz test signal routed directly into the Arduino's 16-bit Timer1 hardware counter (Pin D5 / T1).
+  * The GPS **1PPS** signal triggers an external hardware interrupt (Pin D2 / INT0) to gate the counter over 1s, 10s, or 40s integration windows.
+  * Real-time calibration correction factor in **ppb** is continuously computed and fed into the Si5351 PLL registers.
+* **Dual Operating Modes**:
+  * **Continuous GPSDO Tracking**: Active background disciplining against GPS time.
+  * **Manual / One-Shot Calibration**: Run on demand via `cal` command and freeze settings.
+* **Zero-Allocation Lightweight NMEA Parser**:
+  * Decodes `$GPRMC` and `$GPGGA` sentences without heavy external libraries.
+  * Provides UTC time, date, 3D fix lock status, visible satellite count, and HDOP.
+  * Built-in Maidenhead Grid Locator (QTH locator) computation.
+* **Interactive CLI over USB Serial (115200 baud)**:
+  * Simple terminal command prompt for frequency changes, drive strength adjustments, status queries, and manual calibration.
+* **EEPROM Persistence**:
+  * Store and restore user frequencies, channel states, drive strengths, and calibration constants with CRC protection across reboots.
+
+---
+
+## 🔌 Hardware Wiring Diagram
+
+```mermaid
+flowchart TD
+    subgraph Arduino_Nano [Arduino Nano ATmega328P]
+        D2[D2 / INT0]
+        D3[D3 / SoftRX]
+        D4[D4 / SoftTX]
+        D5[D5 / T1 Counter]
+        A4[A4 / I2C SDA]
+        A5[A5 / I2C SCL]
+        V5[5V]
+        GND[GND]
+        D13[D13 LED]
+        A0[A0 LOCK LED]
+    end
+
+    subgraph NEO_6M [u-blox NEO-6M GPS]
+        GPS_PPS[1PPS Pin]
+        GPS_TX[TX Pin]
+        GPS_RX[RX Pin]
+        GPS_VCC[VCC Pin]
+        GPS_GND[GND Pin]
+    end
+
+    subgraph Si5351A [Si5351A Breakout Board]
+        SI_SDA[SDA]
+        SI_SCL[SCL]
+        SI_VCC[VIN / 5V]
+        SI_GND[GND]
+        CLK0[CLK0 - Primary RF Out]
+        CLK1[CLK1 - Aux RF Out]
+        CLK2[CLK2 - 1 MHz FLL Ref]
+    end
+
+    %% Wiring
+    GPS_PPS -->|1 Pulse / Sec| D2
+    GPS_TX -->|NMEA 9600 Baud| D3
+    D4 -.->|Commands| GPS_RX
+    GPS_VCC --- V5
+    GPS_GND --- GND
+
+    A4 <-->|I2C Data| SI_SDA
+    A5 <-->|I2C Clock| SI_SCL
+    SI_VCC --- V5
+    SI_GND --- GND
+
+    CLK2 ==>|Reference Feedback Loop| D5
+```
+
+### Pin Connection Table
+
+| Module | Module Pin | Arduino Nano Pin | Notes / Description |
+|---|---|---|---|
+| **Si5351A** | VIN / VCC | **5V** (or 3.3V) | Power supply (for boards with 3.3V LDO regulator) |
+| | GND | **GND** | Ground |
+| | SDA | **A4** | Hardware I2C Data |
+| | SCL | **A5** | Hardware I2C Clock |
+| | CLK0 | SMA / BNC 1 | Primary RF output (50 $\Omega$) |
+| | CLK1 | SMA / BNC 2 | Auxiliary RF output |
+| | **CLK2** | **D5 (T1)** | **1.000 MHz reference signal for hardware counter** |
+| **NEO-6M** | VCC | **5V** | Power supply (onboard 3.3V LDO) |
+| | GND | **GND** | Ground |
+| | **PPS** | **D2 (INT0)** | **1PPS pulse input (hardware interrupt)** |
+| | TX | **D3** | GPS NMEA output $\rightarrow$ Arduino RX |
+| | RX | **D4** | Arduino TX $\rightarrow$ GPS RX (optional) |
+| **LEDs** | Built-in | **D13** | Flashes synchronously with each 1PPS pulse |
+| | LOCK (opt.) | **A0** | Lights up when frequency lock error is $\le 150$ ppb |
+
+> [!IMPORTANT]
+> To enable hardware auto-calibration, ensure that **CLK2** on the Si5351 is wired directly to **D5** on the Arduino Nano.
+
+---
+
+## 🚀 Getting Started
+
+### Method 1: Arduino IDE
+1. Open the Arduino IDE Library Manager (*Sketch $\rightarrow$ Include Library $\rightarrow$ Manage Libraries...*).
+2. Search for and install **Etherkit Si5351** (by Jason Milldrum).
+3. Open `Gen Si5351.ino`.
+4. In the **Tools** menu:
+   * **Board**: `Arduino Nano`
+   * **Processor**: `ATmega328P` (or `ATmega328P (Old Bootloader)` for clone boards).
+   * **Port**: Select your Arduino COM port.
+5. Click **Upload**.
+6. Open **Serial Monitor** at **115200 baud** with line ending set to `Both NL & CR` or `Newline`.
+
+### Method 2: PlatformIO (VS Code / CLI)
+A pre-configured `platformio.ini` is included. Simply clone the repository and run:
+```bash
+pio run --target upload
+pio device monitor -b 115200
+```
+
+---
+
+## 💻 CLI Commands (USB Serial at 115200 baud)
+
+All commands are case-insensitive.
+
+| Command | Description | Example |
+|---|---|---|
+| `status` | Print full system status: GPS, sats, UTC, FLL, channel frequencies | `status` |
+| `freq <clk> <hz>` | Set frequency on channel 0 or 1 (8000 to 160000000 Hz) | `freq 0 10000000`<br>`freq 1 14074000` |
+| `out <clk> <on/off>` | Turn channel output ON or OFF (0, 1, or 2) | `out 0 on`<br>`out 1 off` |
+| `drive <clk> <mA>` | Set output drive strength: `2`, `4`, `6`, or `8` mA | `drive 0 8` |
+| `cal [sec]` | Run an immediate one-shot calibration cycle (default: 10s) | `cal 10` |
+| `fll <on/off>` | Enable/disable continuous background GPSDO disciplining | `fll on` |
+| `corr <ppb>` | Manually set Si5351 crystal correction factor in ppb | `corr 38450` |
+| `xtal <hz>` | Set Si5351 nominal crystal frequency (25000000 or 27000000) | `xtal 25000000` |
+| `save` | Save all current settings and calibration factor to EEPROM | `save` |
+| `load` | Reload saved configuration from EEPROM | `load` |
+| `reset` | Reset all settings to factory defaults | `reset` |
+| `help` or `?` | Print list of all available commands | `help` |
+
+---
+
+## 📊 Example `status` Output
+
+```text
+================= SYSTEM STATUS =================
+GPS Status     : 3D FIX (LOCKED) | Sats: 10 | HDOP: 0.8
+UTC Time/Date  : 12:45:02  01.09.2026  QTH: KO85we
+1PPS Signal    : ACTIVE (Pulses: 489)
+-------------------------------------------------
+FLL Engine     : LOCKED (Disciplined) | Auto-discipline: ON (GPSDO)
+Si5351 XTAL    : 25 MHz | Current correction: 38450 ppb (38.450 ppm)
+FLL Measured   : 1000000 Hz (error: 8 ppb) [Gate: 22/40 s]
+-------------------------------------------------
+CLK0 (Primary) : [ON] 10.000 000 MHz (Drive: 8mA)
+CLK1 (Aux)     : [OFF] 14.074 000 MHz (Drive: 8mA)
+CLK2 (FLL Ref) : [ON] 1.000 000 MHz -> D5 Counter Input
+=================================================
+```
+
+---
+
+## 🔬 How FLL Disciplining Works
+
+1. **Reference Frequency Generation**:
+   The Si5351 synthesizes a 1.000 000 MHz square wave on `CLK2`.
+2. **Pulse Counting**:
+   The ATmega328P 16-bit Timer1 is configured in asynchronous external counter mode, incrementing on every rising clock edge on pin `D5`.
+3. **1PPS Synchronization**:
+   The NEO-6M generates an atomic-accurate pulse every second upon GPS 3D fix. When the interrupt on pin `D2` triggers, the counter value and overflow registers are captured with negligible latency.
+4. **Error Calculation**:
+   Over an integration gate ($N = 10\text{ s}$ or $40\text{ s}$), expected count is $N \times 1\,000\,000$. The tick error $\Delta$ directly yields the fractional frequency offset:
+   $$\Delta_{\text{ppb}} = \frac{\Delta \times 10^3}{N}$$
+5. **Closed-Loop Correction**:
+   The correction is applied via `si5351.set_correction()`, which recalculates the PLL multipliers in hardware, steering the output back to zero error.
+
+---
+
+## 💡 Practical Recommendations
+
+* **GPS Antenna**: The NEO-6M requires a clear view of the sky (place near a window for initial testing). The onboard PPS LED on the NEO-6M will only start blinking once a valid 3D GPS fix is acquired.
+* **Power Supply**: Si5351 output buffers draw up to 50–80 mA under load. Use a clean USB power supply or external 5V regulator with adequate decoupling capacitors (100–470 $\mu$F) across 5V and GND.
+* **Crystal Selection**: Most generic purple Si5351 boards have a 25 MHz crystal. If your board uses a 27 MHz crystal, type `xtal 27000000` in the serial terminal and save with `save`.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
