@@ -52,7 +52,7 @@ The system implements a closed-loop **Frequency Locked Loop (FLL)** using the GP
 | | **CLK2** | **D5 (T1)** | **1.000 MHz reference signal for hardware counter** |
 | **NEO-6M** | VCC | **5V** | Power supply (onboard 3.3V LDO) |
 | | GND | **GND** | Ground |
-| | **PPS** | **D2 (INT0)** | **1PPS pulse input (hardware interrupt)** |
+| | **PPS** | **D2 (INT0)** | **1PPS pulse input (hardware interrupt)**. Connect to `PPS` header or `TP` pad |
 | | TX | **D3** | GPS NMEA output $\rightarrow$ Arduino RX |
 | | RX | **D4** | Arduino TX $\rightarrow$ GPS RX (optional) |
 | **LEDs** | Built-in | **D13** | Flashes synchronously with each 1PPS pulse |
@@ -60,6 +60,13 @@ The system implements a closed-loop **Frequency Locked Loop (FLL)** using the GP
 
 > [!IMPORTANT]
 > To enable hardware auto-calibration, ensure that **CLK2** on the Si5351 is wired directly to **D5** on the Arduino Nano.
+
+> [!TIP]
+> **Locating the 1PPS / TIMEPULSE Pin on NEO-6M Modules**:
+> * **5-Pin Modules**: The `PPS` pin is readily available as the 5th pin on the main header.
+> * **4-Pin Modules (e.g., GY-NEO6MV2)**: The main header only exposes `VCC`, `RX`, `TX`, and `GND`. The 1PPS signal is routed to an unpopulated circular solder pad labeled **`PPS`** or **`TP`** (*TimePulse*), connected directly to Pin 3 of the u-blox chip. If no pad is present, you can solder directly to the trace/anode of the onboard PPS status LED.
+> * **Logic Level Compatibility**: The 3.3V CMOS output from the u-blox TIMEPULSE pin directly triggers the ATmega328P `INT0` input (logic HIGH threshold $\ge 3.0\text{V}$ at 5V $V_{CC}$), requiring no level shifters or voltage dividers.
+> * **3D Fix Requirement**: The 1PPS pulse and the onboard PPS LED will only activate once the GPS acquires a valid satellite fix (typically 30–90 seconds near a window).
 
 ---
 
