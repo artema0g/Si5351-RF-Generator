@@ -3,7 +3,7 @@
 [![Arduino](https://img.shields.io/badge/Platform-Arduino-00979D?logo=arduino&logoColor=white)](https://www.arduino.cc/)
 [![AVR](https://img.shields.io/badge/MCU-ATmega328P-blue.svg)](https://www.microchip.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![GitHub](https://img.shields.io/badge/Status-Tested%20%26%20Working-brightgreen.svg)]()
+[![GitHub](https://img.shields.io/badge/Status-Tested%20%26%20Working-brightgreen.svg)](https://github.com/artema0g/Si5351-RF-Generator)
 
 A high-precision, lab-grade RF signal synthesizer and **GPS-Disciplined Oscillator (GPSDO)** covering **8 kHz to 160 MHz** using an **Arduino Nano (ATmega328P)**, **Silicon Labs Si5351A**, and a **u-blox NEO-6M GPS** module.
 
