@@ -39,62 +39,6 @@ The system implements a closed-loop **Frequency Locked Loop (FLL)** using the GP
 
 ![Hardware Wiring Diagram](docs/wiring_diagram.png)
 
-<details>
-<summary><b>🔍 Click to view Breadboard 3D Layout</b></summary>
-<br>
-
-![Breadboard Layout](docs/breadboard_diagram.jpg)
-
-</details>
-
-```mermaid
-flowchart TD
-    subgraph Arduino_Nano [Arduino Nano ATmega328P]
-        D2[D2 / INT0]
-        D3[D3 / SoftRX]
-        D4[D4 / SoftTX]
-        D5[D5 / T1 Counter]
-        A4[A4 / I2C SDA]
-        A5[A5 / I2C SCL]
-        V5[5V]
-        GND[GND]
-        D13[D13 LED]
-        A0[A0 LOCK LED]
-    end
-
-    subgraph NEO_6M [u-blox NEO-6M GPS]
-        GPS_PPS[1PPS Pin]
-        GPS_TX[TX Pin]
-        GPS_RX[RX Pin]
-        GPS_VCC[VCC Pin]
-        GPS_GND[GND Pin]
-    end
-
-    subgraph Si5351A [Si5351A Breakout Board]
-        SI_SDA[SDA]
-        SI_SCL[SCL]
-        SI_VCC[VIN / 5V]
-        SI_GND[GND]
-        CLK0[CLK0 - Primary RF Out]
-        CLK1[CLK1 - Aux RF Out]
-        CLK2[CLK2 - 1 MHz FLL Ref]
-    end
-
-    %% Wiring
-    GPS_PPS -->|1 Pulse / Sec| D2
-    GPS_TX -->|NMEA 9600 Baud| D3
-    D4 -.->|Commands| GPS_RX
-    GPS_VCC --- V5
-    GPS_GND --- GND
-
-    A4 <-->|I2C Data| SI_SDA
-    A5 <-->|I2C Clock| SI_SCL
-    SI_VCC --- V5
-    SI_GND --- GND
-
-    CLK2 ==>|Reference Feedback Loop| D5
-```
-
 ### Pin Connection Table
 
 | Module | Module Pin | Arduino Nano Pin | Notes / Description |
