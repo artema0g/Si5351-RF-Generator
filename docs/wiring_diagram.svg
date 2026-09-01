@@ -1,0 +1,515 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1350 820" width="1350" height="820" style="background:#0a0e17; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Background Grid Pattern -->
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#172033" />
+    </pattern>
+
+    <!-- Component Drop Shadow -->
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.65"/>
+    </filter>
+
+    <!-- Wire Glow Filters -->
+    <filter id="glow-orange" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#f97316" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#c084fc" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#22d3ee" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#60a5fa" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#4ade80" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow-red" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#f87171" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Metallic Gradients -->
+    <linearGradient id="metal-usb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="50%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+
+    <linearGradient id="metal-can" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="40%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+
+    <linearGradient id="gold-sma" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+
+    <linearGradient id="antenna-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ece6dd"/>
+      <stop offset="100%" stop-color="#d4c7b5"/>
+    </linearGradient>
+
+    <!-- Arduino Board Gradient -->
+    <linearGradient id="nano-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00979d"/>
+      <stop offset="100%" stop-color="#00666d"/>
+    </linearGradient>
+
+    <!-- Si5351 Board Gradient -->
+    <linearGradient id="si-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6b21a8"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+
+    <!-- GPS Board Gradient -->
+    <linearGradient id="gps-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" fill="#0a0e17"/>
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- HEADER -->
+  <g transform="translate(675, 42)" text-anchor="middle">
+    <text y="0" fill="#f8fafc" font-size="24" font-weight="800" letter-spacing="1.5">HARDWARE WIRING DIAGRAM</text>
+    <text y="24" fill="#94a3b8" font-size="13" font-weight="500">Precision RF Signal Generator &amp; GPSDO (8 kHz – 160 MHz) | Arduino Nano + Si5351A + NEO-6M</text>
+  </g>
+
+  <!-- ==================================================================== -->
+  <!-- 1. LEFT MODULE: Si5351A CLOCK GENERATOR (x: 80, y: 120)              -->
+  <!-- ==================================================================== -->
+  <g id="si5351-module" transform="translate(80, 130)" filter="url(#shadow)">
+    <!-- Board PCB -->
+    <rect width="250" height="420" rx="14" fill="url(#si-grad)" stroke="#9333ea" stroke-width="2.5"/>
+    <rect x="8" y="8" width="234" height="404" rx="10" fill="none" stroke="#a855f7" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.6"/>
+
+    <!-- Silkscreen Header -->
+    <text x="125" y="32" fill="#f3e8ff" font-size="13" font-weight="800" text-anchor="middle" letter-spacing="0.5">Si5351A SYNTHESIZER</text>
+    <text x="125" y="48" fill="#d8b4fe" font-size="9.5" font-weight="600" text-anchor="middle">3-Channel I2C Clock Generator</text>
+
+    <!-- 25.000 MHz Crystal -->
+    <rect x="75" y="70" width="100" height="44" rx="6" fill="url(#metal-can)" stroke="#e2e8f0" stroke-width="1.2"/>
+    <text x="125" y="94" fill="#ffffff" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing="0.5">25.000 MHz</text>
+    <text x="125" y="106" fill="#cbd5e1" font-size="7.5" text-anchor="middle">XTAL REFERENCE</text>
+
+    <!-- Si5351 IC QFN-10 -->
+    <rect x="85" y="145" width="80" height="65" rx="4" fill="#0f172a" stroke="#a855f7" stroke-width="1.5"/>
+    <circle cx="95" cy="155" r="2" fill="#a855f7"/>
+    <text x="125" y="178" fill="#e9d5ff" font-size="11" font-weight="800" text-anchor="middle">Si5351A</text>
+    <text x="125" y="193" fill="#a855f7" font-size="7.5" font-weight="600" text-anchor="middle">MSOP-10</text>
+
+    <!-- RF OUTPUTS (SMA connectors on Left) -->
+    <!-- CLK0 -->
+    <g transform="translate(0, 255)">
+      <rect x="-16" y="-14" width="20" height="28" rx="3" fill="url(#gold-sma)" stroke="#ca8a04" stroke-width="1.2"/>
+      <circle cx="-6" cy="0" r="4.5" fill="#e11d48"/>
+      <circle cx="16" cy="0" r="7" fill="#1e1b4b" stroke="#e11d48" stroke-width="2"/>
+      <text x="30" y="4" fill="#ffffff" font-size="11" font-weight="800">CLK0</text>
+      <text x="30" y="16" fill="#fda4af" font-size="8.5" font-weight="600">Primary RF (10 MHz)</text>
+    </g>
+
+    <!-- CLK1 -->
+    <g transform="translate(0, 315)">
+      <rect x="-16" y="-14" width="20" height="28" rx="3" fill="url(#gold-sma)" stroke="#ca8a04" stroke-width="1.2"/>
+      <circle cx="-6" cy="0" r="4.5" fill="#38bdf8"/>
+      <circle cx="16" cy="0" r="7" fill="#1e1b4b" stroke="#38bdf8" stroke-width="2"/>
+      <text x="30" y="4" fill="#ffffff" font-size="11" font-weight="800">CLK1</text>
+      <text x="30" y="16" fill="#bae6fd" font-size="8.5" font-weight="600">Auxiliary RF (14.074 MHz)</text>
+    </g>
+
+    <!-- CLK2 (Connected to D5) -->
+    <g transform="translate(0, 375)">
+      <rect x="-16" y="-14" width="20" height="28" rx="3" fill="url(#gold-sma)" stroke="#ca8a04" stroke-width="1.2"/>
+      <circle cx="-6" cy="0" r="4.5" fill="#c084fc"/>
+      <circle cx="16" cy="0" r="7" fill="#1e1b4b" stroke="#c084fc" stroke-width="2"/>
+      <text x="30" y="4" fill="#ffffff" font-size="11" font-weight="800">CLK2</text>
+      <text x="30" y="16" fill="#e9d5ff" font-size="8.5" font-weight="600">1.000 MHz FLL Ref</text>
+    </g>
+
+    <!-- HEADER PINS (Right Side) -->
+    <!-- VIN -->
+    <g id="si-pin-vin" transform="translate(250, 160)">
+      <circle cx="0" cy="0" r="7.5" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="4" fill="#ffffff" font-size="11" font-weight="800" text-anchor="end">VIN</text>
+      <text x="-48" y="4" fill="#fca5a5" font-size="8" text-anchor="end">5V</text>
+    </g>
+
+    <!-- GND -->
+    <g id="si-pin-gnd" transform="translate(250, 205)">
+      <circle cx="0" cy="0" r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="4" fill="#ffffff" font-size="11" font-weight="800" text-anchor="end">GND</text>
+    </g>
+
+    <!-- SDA -->
+    <g id="si-pin-sda" transform="translate(250, 250)">
+      <circle cx="0" cy="0" r="7.5" fill="#06b6d4" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="4" fill="#ffffff" font-size="11" font-weight="800" text-anchor="end">SDA</text>
+      <text x="-50" y="4" fill="#a5f3fc" font-size="8" text-anchor="end">I2C Data</text>
+    </g>
+
+    <!-- SCL -->
+    <g id="si-pin-scl" transform="translate(250, 295)">
+      <circle cx="0" cy="0" r="7.5" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="4" fill="#ffffff" font-size="11" font-weight="800" text-anchor="end">SCL</text>
+      <text x="-48" y="4" fill="#bfdbfe" font-size="8" text-anchor="end">I2C Clk</text>
+    </g>
+
+    <!-- CLK2 Header Pin Out (Alternative wire tap) -->
+    <g id="si-pin-clk2" transform="translate(250, 350)">
+      <circle cx="0" cy="0" r="7.5" fill="#a855f7" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="4" fill="#ffffff" font-size="11" font-weight="800" text-anchor="end">CLK2</text>
+      <text x="-54" y="4" fill="#e9d5ff" font-size="8" text-anchor="end">FLL Pin</text>
+    </g>
+  </g>
+
+  <!-- ==================================================================== -->
+  <!-- 2. CENTER MODULE: ARDUINO NANO (x: 540, y: 110)                      -->
+  <!-- ==================================================================== -->
+  <g id="arduino-nano" transform="translate(540, 110)" filter="url(#shadow)">
+    <!-- Board PCB -->
+    <rect width="270" height="540" rx="14" fill="url(#nano-grad)" stroke="#38bdf8" stroke-width="2.5"/>
+    <rect x="8" y="8" width="254" height="524" rx="10" fill="none" stroke="#7dd3fc" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.5"/>
+
+    <!-- USB Port (Top) -->
+    <rect x="95" y="-16" width="80" height="34" rx="4" fill="url(#metal-usb)" stroke="#f8fafc" stroke-width="1.5"/>
+    <rect x="110" y="-12" width="50" height="12" rx="2" fill="#0f172a"/>
+    <text x="135" y="36" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle" letter-spacing="1">ARDUINO NANO</text>
+    <text x="135" y="50" fill="#bae6fd" font-size="9" font-weight="600" text-anchor="middle">ATmega328P • 16 MHz • 5V</text>
+
+    <!-- Reset Button -->
+    <rect x="115" y="68" width="40" height="24" rx="3" fill="#334155" stroke="#94a3b8" stroke-width="1"/>
+    <circle cx="135" cy="80" r="6" fill="#e2e8f0"/>
+
+    <!-- ATmega328P Microcontroller Chip (Rotated Diamond) -->
+    <g transform="translate(135, 230)">
+      <rect x="-42" y="-42" width="84" height="84" rx="5" transform="rotate(45)" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+      <circle cx="-16" cy="-16" r="3" fill="#38bdf8"/>
+      <text y="-2" fill="#f8fafc" font-size="11" font-weight="800" text-anchor="middle">ATmega328P</text>
+      <text y="14" fill="#38bdf8" font-size="8.5" font-weight="700" text-anchor="middle">AVR CORE</text>
+    </g>
+
+    <!-- 16 MHz Resonator -->
+    <rect x="120" y="325" width="30" height="16" rx="3" fill="url(#metal-can)" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="135" y="336" fill="#ffffff" font-size="7" font-weight="700" text-anchor="middle">16.000</text>
+
+    <!-- ICSP Header (6 pins) -->
+    <g transform="translate(115, 460)">
+      <rect x="-5" y="-5" width="50" height="34" rx="3" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+      <circle cx="8" cy="6" r="3" fill="#fef08a"/>
+      <circle cx="20" cy="6" r="3" fill="#fef08a"/>
+      <circle cx="32" cy="6" r="3" fill="#fef08a"/>
+      <circle cx="8" cy="18" r="3" fill="#fef08a"/>
+      <circle cx="20" cy="18" r="3" fill="#fef08a"/>
+      <circle cx="32" cy="18" r="3" fill="#fef08a"/>
+      <text x="20" y="42" fill="#94a3b8" font-size="7.5" text-anchor="middle">ICSP</text>
+    </g>
+
+    <!-- LEFT PIN HEADER (D13 .. VIN) -->
+    <!-- D13 -->
+    <g id="nano-pin-d13" transform="translate(0, 95)">
+      <circle cx="0" cy="0" r="7" fill="#38bdf8" stroke="#ffffff" stroke-width="1.2"/>
+      <text x="16" y="3.5" fill="#f8fafc" font-size="10" font-weight="700">D13</text>
+      <text x="44" y="3.5" fill="#7dd3fc" font-size="7.5">PPS LED</text>
+    </g>
+    <g transform="translate(0, 125)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="16" y="3" fill="#64748b" font-size="9">3V3</text></g>
+    <g transform="translate(0, 155)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="16" y="3" fill="#64748b" font-size="9">REF</text></g>
+    <!-- A0 -->
+    <g id="nano-pin-a0" transform="translate(0, 185)">
+      <circle cx="0" cy="0" r="7" fill="#f59e0b" stroke="#ffffff" stroke-width="1.2"/>
+      <text x="16" y="3.5" fill="#f8fafc" font-size="10" font-weight="700">A0</text>
+      <text x="36" y="3.5" fill="#fde68a" font-size="7.5">Lock LED</text>
+    </g>
+    <g transform="translate(0, 215)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="16" y="3" fill="#64748b" font-size="9">A1</text></g>
+    <g transform="translate(0, 245)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="16" y="3" fill="#64748b" font-size="9">A2</text></g>
+    <g transform="translate(0, 275)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="16" y="3" fill="#64748b" font-size="9">A3</text></g>
+    <!-- A4 (SDA) -->
+    <g id="nano-pin-a4" transform="translate(0, 305)">
+      <circle cx="0" cy="0" r="7.5" fill="#06b6d4" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="16" y="3.5" fill="#ffffff" font-size="10.5" font-weight="800">A4</text>
+      <text x="38" y="3.5" fill="#a5f3fc" font-size="8" font-weight="700">I2C SDA</text>
+    </g>
+    <!-- A5 (SCL) -->
+    <g id="nano-pin-a5" transform="translate(0, 335)">
+      <circle cx="0" cy="0" r="7.5" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="16" y="3.5" fill="#ffffff" font-size="10.5" font-weight="800">A5</text>
+      <text x="38" y="3.5" fill="#bfdbfe" font-size="8" font-weight="700">I2C SCL</text>
+    </g>
+    <g transform="translate(0, 365)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="16" y="3" fill="#64748b" font-size="9">A6</text></g>
+    <g transform="translate(0, 395)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="16" y="3" fill="#64748b" font-size="9">A7</text></g>
+    <!-- 5V -->
+    <g id="nano-pin-5v" transform="translate(0, 425)">
+      <circle cx="0" cy="0" r="7.5" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="16" y="3.5" fill="#ffffff" font-size="10.5" font-weight="800">5V</text>
+      <text x="38" y="3.5" fill="#fca5a5" font-size="8" font-weight="700">VCC Power</text>
+    </g>
+    <g transform="translate(0, 455)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="16" y="3" fill="#64748b" font-size="9">RST</text></g>
+    <!-- GND -->
+    <g id="nano-pin-gnd" transform="translate(0, 485)">
+      <circle cx="0" cy="0" r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="16" y="3.5" fill="#ffffff" font-size="10.5" font-weight="800">GND</text>
+      <text x="44" y="3.5" fill="#6ee7b7" font-size="8" font-weight="700">Ground</text>
+    </g>
+    <g transform="translate(0, 515)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="16" y="3" fill="#64748b" font-size="9">VIN</text></g>
+
+    <!-- RIGHT PIN HEADER (D12 .. TX1) -->
+    <g transform="translate(270, 95)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">D12</text></g>
+    <g transform="translate(270, 125)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">D11</text></g>
+    <g transform="translate(270, 155)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">D10</text></g>
+    <g transform="translate(270, 185)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">D9</text></g>
+    <g transform="translate(270, 215)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">D8</text></g>
+    <g transform="translate(270, 245)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">D7</text></g>
+    <g transform="translate(270, 275)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">D6</text></g>
+    <!-- D5 (T1) -->
+    <g id="nano-pin-d5" transform="translate(270, 305)">
+      <circle cx="0" cy="0" r="7.5" fill="#a855f7" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="3.5" fill="#ffffff" font-size="10.5" font-weight="800" text-anchor="end">D5</text>
+      <text x="-38" y="3.5" fill="#e9d5ff" font-size="8" font-weight="700" text-anchor="end">T1 Counter</text>
+    </g>
+    <!-- D4 (SoftTX) -->
+    <g id="nano-pin-d4" transform="translate(270, 335)">
+      <circle cx="0" cy="0" r="7.5" fill="#eab308" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="3.5" fill="#ffffff" font-size="10.5" font-weight="800" text-anchor="end">D4</text>
+      <text x="-38" y="3.5" fill="#fef08a" font-size="8" font-weight="700" text-anchor="end">SoftTX</text>
+    </g>
+    <!-- D3 (SoftRX) -->
+    <g id="nano-pin-d3" transform="translate(270, 365)">
+      <circle cx="0" cy="0" r="7.5" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="3.5" fill="#ffffff" font-size="10.5" font-weight="800" text-anchor="end">D3</text>
+      <text x="-38" y="3.5" fill="#bbf7d0" font-size="8" font-weight="700" text-anchor="end">SoftRX</text>
+    </g>
+    <!-- D2 (INT0) -->
+    <g id="nano-pin-d2" transform="translate(270, 395)">
+      <circle cx="0" cy="0" r="7.5" fill="#f97316" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="3.5" fill="#ffffff" font-size="10.5" font-weight="800" text-anchor="end">D2</text>
+      <text x="-38" y="3.5" fill="#fed7aa" font-size="8" font-weight="700" text-anchor="end">INT0 1PPS</text>
+    </g>
+    <!-- GND2 -->
+    <g id="nano-pin-gnd2" transform="translate(270, 425)">
+      <circle cx="0" cy="0" r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="-16" y="3.5" fill="#ffffff" font-size="10.5" font-weight="800" text-anchor="end">GND</text>
+      <text x="-48" y="3.5" fill="#6ee7b7" font-size="8" font-weight="700" text-anchor="end">Ground</text>
+    </g>
+    <g transform="translate(270, 455)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">RST</text></g>
+    <g transform="translate(270, 485)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">RX0</text></g>
+    <g transform="translate(270, 515)"><circle cx="0" cy="0" r="6" fill="#334155" stroke="#94a3b8" stroke-width="1"/><text x="-16" y="3" fill="#64748b" font-size="9" text-anchor="end">TX1</text></g>
+  </g>
+
+  <!-- ==================================================================== -->
+  <!-- 3. RIGHT MODULE: u-blox NEO-6M GPS (x: 1010, y: 130)                 -->
+  <!-- ==================================================================== -->
+  <g id="neo6m-module" transform="translate(1020, 130)" filter="url(#shadow)">
+    <!-- Board PCB -->
+    <rect width="250" height="390" rx="14" fill="url(#gps-grad)" stroke="#3b82f6" stroke-width="2.5"/>
+    <rect x="8" y="8" width="234" height="374" rx="10" fill="none" stroke="#60a5fa" stroke-width="0.8" stroke-dasharray="4 3" opacity="0.6"/>
+
+    <!-- Silkscreen Header -->
+    <text x="125" y="32" fill="#eff6ff" font-size="13" font-weight="800" text-anchor="middle" letter-spacing="0.5">u-blox NEO-6M</text>
+    <text x="125" y="48" fill="#93c5fd" font-size="9.5" font-weight="600" text-anchor="middle">GPS Engine + 1PPS Reference</text>
+
+    <!-- Ceramic Patch Antenna -->
+    <g transform="translate(125, 140)">
+      <rect x="-55" y="-55" width="110" height="110" rx="10" fill="url(#antenna-grad)" stroke="#94a3b8" stroke-width="2"/>
+      <circle cx="0" cy="0" r="14" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="4.5" fill="#ca8a04"/>
+      <text y="42" fill="#475569" font-size="8" font-weight="800" text-anchor="middle" letter-spacing="0.8">CERAMIC PATCH</text>
+    </g>
+
+    <!-- Metal Shielded Module CAN -->
+    <rect x="45" y="215" width="160" height="75" rx="6" fill="url(#metal-can)" stroke="#e2e8f0" stroke-width="1.2"/>
+    <text x="125" y="244" fill="#ffffff" font-size="12" font-weight="900" text-anchor="middle" letter-spacing="1">u-blox</text>
+    <text x="125" y="260" fill="#e2e8f0" font-size="9" font-weight="700" text-anchor="middle">NEO-6M-0-001</text>
+    <text x="125" y="274" fill="#cbd5e1" font-size="7.5" text-anchor="middle">GPS RECEIVER 50-CH</text>
+
+    <!-- LEDs -->
+    <circle cx="55" cy="305" r="4.5" fill="#ef4444" stroke="#ffffff" stroke-width="1"/>
+    <text x="65" y="308" fill="#fca5a5" font-size="8" font-weight="700">PPS LED</text>
+
+    <circle cx="160" cy="305" r="4.5" fill="#22c55e" stroke="#ffffff" stroke-width="1"/>
+    <text x="170" y="308" fill="#86efac" font-size="8" font-weight="700">PWR</text>
+
+    <!-- HEADER PINS (Left Side) -->
+    <!-- VCC -->
+    <g id="gps-pin-vcc" transform="translate(0, 160)">
+      <circle cx="0" cy="0" r="7.5" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="16" y="4" fill="#ffffff" font-size="11" font-weight="800">VCC</text>
+      <text x="46" y="4" fill="#fca5a5" font-size="8">5V</text>
+    </g>
+
+    <!-- GND -->
+    <g id="gps-pin-gnd" transform="translate(0, 205)">
+      <circle cx="0" cy="0" r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="16" y="4" fill="#ffffff" font-size="11" font-weight="800">GND</text>
+      <text x="48" y="4" fill="#6ee7b7" font-size="8">Ground</text>
+    </g>
+
+    <!-- TX -->
+    <g id="gps-pin-tx" transform="translate(0, 250)">
+      <circle cx="0" cy="0" r="7.5" fill="#22c55e" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="16" y="4" fill="#ffffff" font-size="11" font-weight="800">TX</text>
+      <text x="36" y="4" fill="#bbf7d0" font-size="8">NMEA 9600</text>
+    </g>
+
+    <!-- RX -->
+    <g id="gps-pin-rx" transform="translate(0, 295)">
+      <circle cx="0" cy="0" r="7.5" fill="#eab308" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="16" y="4" fill="#ffffff" font-size="11" font-weight="800">RX</text>
+      <text x="36" y="4" fill="#fef08a" font-size="8">Config</text>
+    </g>
+
+    <!-- PPS -->
+    <g id="gps-pin-pps" transform="translate(0, 340)">
+      <circle cx="0" cy="0" r="7.5" fill="#f97316" stroke="#ffffff" stroke-width="1.5"/>
+      <text x="16" y="4" fill="#ffffff" font-size="11" font-weight="800">PPS</text>
+      <text x="44" y="4" fill="#fed7aa" font-size="8">1PPS Pulse</text>
+    </g>
+  </g>
+
+  <!-- ==================================================================== -->
+  <!-- 4. CONNECTING JUMPER WIRES (Smooth Bezier Curves with Badges)         -->
+  <!-- ==================================================================== -->
+
+  <!-- WIRE 1: 5V Power (Red) [Nano 5V (540, 535) -> Si5351 VIN (330, 290) & GPS VCC (1020, 290)] -->
+  <path d="M 540,535 C 450,535 370,410 330,290" fill="none" stroke="#ef4444" stroke-width="4.5" filter="url(#glow-red)" stroke-linecap="round"/>
+  <path d="M 540,535 C 450,535 370,410 330,290" fill="none" stroke="#fca5a5" stroke-width="1.2" stroke-linecap="round"/>
+
+  <path d="M 540,535 C 680,680 940,500 1020,290" fill="none" stroke="#ef4444" stroke-width="4.5" filter="url(#glow-red)" stroke-linecap="round"/>
+  <path d="M 540,535 C 680,680 940,500 1020,290" fill="none" stroke="#fca5a5" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- WIRE 2: GND Ground (Green) [Nano GND (540, 595) -> Si5351 GND (330, 335)] -->
+  <path d="M 540,595 C 440,610 360,450 330,335" fill="none" stroke="#10b981" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M 540,595 C 440,610 360,450 330,335" fill="none" stroke="#6ee7b7" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- WIRE 2B: GPS GND [Nano GND2 (810, 535) -> GPS GND (1020, 335)] -->
+  <path d="M 810,535 C 890,535 960,430 1020,335" fill="none" stroke="#10b981" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M 810,535 C 890,535 960,430 1020,335" fill="none" stroke="#6ee7b7" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- WIRE 3: I2C SDA (Cyan) [Si5351 SDA (330, 380) -> Nano A4 (540, 415)] -->
+  <path d="M 330,380 C 400,380 470,415 540,415" fill="none" stroke="#06b6d4" stroke-width="4.5" filter="url(#glow-cyan)" stroke-linecap="round"/>
+  <path d="M 330,380 C 400,380 470,415 540,415" fill="none" stroke="#a5f3fc" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- WIRE 4: I2C SCL (Blue) [Si5351 SCL (330, 425) -> Nano A5 (540, 445)] -->
+  <path d="M 330,425 C 400,425 470,445 540,445" fill="none" stroke="#3b82f6" stroke-width="4.5" filter="url(#glow-blue)" stroke-linecap="round"/>
+  <path d="M 330,425 C 400,425 470,445 540,445" fill="none" stroke="#bfdbfe" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- WIRE 5: CLK2 FLL Feedback (Purple) [Si5351 CLK2 (330, 480) -> Nano D5 (810, 415)] -->
+  <path d="M 330,480 C 420,580 720,580 810,415" fill="none" stroke="#a855f7" stroke-width="5" filter="url(#glow-purple)" stroke-linecap="round"/>
+  <path d="M 330,480 C 420,580 720,580 810,415" fill="none" stroke="#f3e8ff" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- WIRE 6: GPS 1PPS (Orange) [GPS PPS (1020, 470) -> Nano D2 (810, 505)] -->
+  <path d="M 1020,470 C 950,470 880,505 810,505" fill="none" stroke="#f97316" stroke-width="5" filter="url(#glow-orange)" stroke-linecap="round"/>
+  <path d="M 1020,470 C 950,470 880,505 810,505" fill="none" stroke="#ffedd5" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- WIRE 7: GPS TX -> Nano D3 (Green) [GPS TX (1020, 380) -> Nano D3 (810, 475)] -->
+  <path d="M 1020,380 C 940,380 890,475 810,475" fill="none" stroke="#22c55e" stroke-width="4.5" filter="url(#glow-green)" stroke-linecap="round"/>
+  <path d="M 1020,380 C 940,380 890,475 810,475" fill="none" stroke="#bbf7d0" stroke-width="1.2" stroke-linecap="round"/>
+
+  <!-- WIRE 8: Nano D4 -> GPS RX (Yellow) [Nano D4 (810, 445) -> GPS RX (1020, 425)] -->
+  <path d="M 810,445 C 880,445 950,425 1020,425" fill="none" stroke="#eab308" stroke-width="3.5" stroke-dasharray="5 3" stroke-linecap="round"/>
+  <path d="M 810,445 C 880,445 950,425 1020,425" fill="none" stroke="#fef08a" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- WIRE CALLOUT BADGES (Floating Pill Badges) -->
+  <!-- 5V VCC Badge -->
+  <g transform="translate(425, 480)">
+    <rect x="-35" y="-11" width="70" height="22" rx="11" fill="#ef4444" filter="url(#shadow)"/>
+    <text y="4" fill="#ffffff" font-size="10" font-weight="800" text-anchor="middle">+5V VCC</text>
+  </g>
+
+  <!-- I2C SDA Badge -->
+  <g transform="translate(435, 396)">
+    <rect x="-34" y="-11" width="68" height="22" rx="11" fill="#06b6d4" filter="url(#shadow)"/>
+    <text y="4" fill="#ffffff" font-size="9.5" font-weight="800" text-anchor="middle">I2C SDA</text>
+  </g>
+
+  <!-- I2C SCL Badge -->
+  <g transform="translate(435, 434)">
+    <rect x="-34" y="-11" width="68" height="22" rx="11" fill="#3b82f6" filter="url(#shadow)"/>
+    <text y="4" fill="#ffffff" font-size="9.5" font-weight="800" text-anchor="middle">I2C SCL</text>
+  </g>
+
+  <!-- 1.000 MHz Ref Badge -->
+  <g transform="translate(570, 568)">
+    <rect x="-70" y="-12" width="140" height="24" rx="12" fill="#9333ea" filter="url(#shadow)"/>
+    <text y="4.5" fill="#ffffff" font-size="10" font-weight="800" text-anchor="middle">1.000 MHz FLL FEEDBACK</text>
+  </g>
+
+  <!-- 1PPS Pulse Badge -->
+  <g transform="translate(915, 486)">
+    <rect x="-42" y="-11" width="84" height="22" rx="11" fill="#ea580c" filter="url(#shadow)"/>
+    <text y="4" fill="#ffffff" font-size="10" font-weight="800" text-anchor="middle">1PPS PULSE</text>
+  </g>
+
+  <!-- NMEA 9600 Badge -->
+  <g transform="translate(915, 426)">
+    <rect x="-44" y="-11" width="88" height="22" rx="11" fill="#16a34a" filter="url(#shadow)"/>
+    <text y="4" fill="#ffffff" font-size="9.5" font-weight="800" text-anchor="middle">NMEA 9600 Bd</text>
+  </g>
+
+  <!-- GPS RX Config Badge -->
+  <g transform="translate(915, 370)">
+    <rect x="-36" y="-10" width="72" height="20" rx="10" fill="#ca8a04" filter="url(#shadow)"/>
+    <text y="3.5" fill="#ffffff" font-size="9" font-weight="800" text-anchor="middle">GPS RX (Opt)</text>
+  </g>
+
+  <!-- ==================================================================== -->
+  <!-- 5. BOTTOM LEGEND / PIN SUMMARY TABLE                                 -->
+  <!-- ==================================================================== -->
+  <g transform="translate(80, 680)">
+    <!-- Legend Box -->
+    <rect width="1190" height="105" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5" filter="url(#shadow)"/>
+
+    <!-- Legend Title -->
+    <text x="24" y="28" fill="#f8fafc" font-size="12" font-weight="800" letter-spacing="0.5">QUICK CONNECTION MATRIX &amp; COLOR LEGEND</text>
+
+    <!-- Column 1: Power & Bus -->
+    <g transform="translate(24, 48)">
+      <circle cx="6" cy="6" r="6" fill="#ef4444"/>
+      <text x="20" y="10" fill="#f1f5f9" font-size="10" font-weight="700">5V VCC</text>
+      <text x="75" y="10" fill="#94a3b8" font-size="9.5">Arduino 5V ➜ Si5351 VIN &amp; NEO-6M VCC</text>
+
+      <circle cx="6" cy="28" r="6" fill="#10b981"/>
+      <text x="20" y="32" fill="#f1f5f9" font-size="10" font-weight="700">GND</text>
+      <text x="75" y="32" fill="#94a3b8" font-size="9.5">Common System Ground</text>
+    </g>
+
+    <!-- Column 2: I2C Interface -->
+    <g transform="translate(390, 48)">
+      <circle cx="6" cy="6" r="6" fill="#06b6d4"/>
+      <text x="20" y="10" fill="#f1f5f9" font-size="10" font-weight="700">I2C SDA</text>
+      <text x="75" y="10" fill="#94a3b8" font-size="9.5">Si5351 SDA ➜ Arduino Nano Pin A4</text>
+
+      <circle cx="6" cy="28" r="6" fill="#3b82f6"/>
+      <text x="20" y="32" fill="#f1f5f9" font-size="10" font-weight="700">I2C SCL</text>
+      <text x="75" y="32" fill="#94a3b8" font-size="9.5">Si5351 SCL ➜ Arduino Nano Pin A5</text>
+    </g>
+
+    <!-- Column 3: GPS & FLL Feedback -->
+    <g transform="translate(760, 48)">
+      <circle cx="6" cy="6" r="6" fill="#f97316"/>
+      <text x="20" y="10" fill="#f1f5f9" font-size="10" font-weight="700">1PPS</text>
+      <text x="65" y="10" fill="#94a3b8" font-size="9.5">NEO-6M PPS ➜ Arduino Pin D2 (INT0)</text>
+
+      <circle cx="6" cy="28" r="6" fill="#a855f7"/>
+      <text x="20" y="32" fill="#f1f5f9" font-size="10" font-weight="700">FLL REF</text>
+      <text x="65" y="32" fill="#94a3b8" font-size="9.5">Si5351 CLK2 (1 MHz) ➜ Arduino Pin D5 (T1)</text>
+    </g>
+
+    <!-- Column 4: Serial UART -->
+    <g transform="translate(1080, 48)">
+      <circle cx="6" cy="6" r="6" fill="#22c55e"/>
+      <text x="20" y="10" fill="#f1f5f9" font-size="10" font-weight="700">GPS TX</text>
+      <text x="75" y="10" fill="#94a3b8" font-size="9.5">➜ Nano D3 (RX)</text>
+
+      <circle cx="6" cy="28" r="6" fill="#eab308"/>
+      <text x="20" y="32" fill="#f1f5f9" font-size="10" font-weight="700">GPS RX</text>
+      <text x="75" y="32" fill="#94a3b8" font-size="9.5">⮜ Nano D4 (TX)</text>
+    </g>
+  </g>
+</svg>

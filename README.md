@@ -39,6 +39,14 @@ The system implements a closed-loop **Frequency Locked Loop (FLL)** using the GP
 
 ![Hardware Wiring Diagram](docs/wiring_diagram.png)
 
+<details>
+<summary><b>🔍 Click to view Breadboard 3D Layout</b></summary>
+<br>
+
+![Breadboard Layout](docs/breadboard_diagram.jpg)
+
+</details>
+
 ```mermaid
 flowchart TD
     subgraph Arduino_Nano [Arduino Nano ATmega328P]
