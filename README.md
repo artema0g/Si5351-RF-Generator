@@ -75,7 +75,7 @@ The system implements a closed-loop **Frequency Locked Loop (FLL)** using the GP
 ### Method 1: Arduino IDE
 1. Open the Arduino IDE Library Manager (*Sketch $\rightarrow$ Include Library $\rightarrow$ Manage Libraries...*).
 2. Search for and install **Etherkit Si5351** (by Jason Milldrum).
-3. Open `Gen Si5351.ino`.
+3. Open `Gen_Si5351.ino`.
 4. In the **Tools** menu:
    * **Board**: `Arduino Nano`
    * **Processor**: `ATmega328P` (or `ATmega328P (Old Bootloader)` for clone boards).
