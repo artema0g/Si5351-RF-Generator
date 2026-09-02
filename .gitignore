@@ -16,8 +16,6 @@ build/
 Thumbs.db
 desktop.ini
 
-# VS Code / IDE
-.vscode/
-.idea/
-*.swp
-*.bak
+# Local test scripts & captures
+screenshots/
+capture_scope.py

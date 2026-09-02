@@ -359,14 +359,18 @@ static void handle_command(char* cmdLine) {
     }
 }
 
+static unsigned long lastCharMillis = 0;
+
 void cli_begin() {
     Serial.begin(SERIAL_BAUD_RATE);
     inputPos = 0;
+    lastCharMillis = 0;
 }
 
 void cli_update() {
     while (Serial.available() > 0) {
         char c = (char)Serial.read();
+        lastCharMillis = millis();
         if (c == '\r' || c == '\n') {
             if (inputPos > 0) {
                 inputBuffer[inputPos] = 0;
@@ -380,5 +384,13 @@ void cli_update() {
         } else if (inputPos < sizeof(inputBuffer) - 1) {
             inputBuffer[inputPos++] = c;
         }
+    }
+
+    // Auto-execute if user has 'No line ending' selected in Serial Monitor:
+    // When characters are received and 250ms pass with no more characters, execute!
+    if (inputPos > 0 && (millis() - lastCharMillis > 250)) {
+        inputBuffer[inputPos] = 0;
+        handle_command(inputBuffer);
+        inputPos = 0;
     }
 }

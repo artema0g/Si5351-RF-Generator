@@ -149,6 +149,31 @@ CLK2 (FLL Ref) : [ON] 1.000 000 MHz -> D5 Counter Input
 
 ---
 
+## 🔬 Laboratory Verification & Oscilloscope Measurements
+
+The output RF signals and disciplining accuracy were verified using a calibrated **Rigol DHO924 (12-bit High-Resolution Oscilloscope, 250 MHz, 1.25 GSa/s)** connected directly via LAN SCPI interface.
+
+### 1. Master Reference Clock: 10.000 000 MHz (CLK0)
+![10 MHz Scope Measurement](docs/scope_10mhz_perfect.png)
+
+* **Mean Period ($T_{\text{avg}}$)**: **`100.00 ns`** ($\equiv \mathbf{10.000\,000\text{ MHz}}$) across 1,000 continuous sweeps.
+* **RMS Jitter ($\sigma / \text{Dev}$)**: **`133.37 ps`** (matches Silicon Labs MultiSynth specification).
+* **Peak-to-Peak Deviation**: $99.50\text{ ns} - 100.50\text{ ns}$ ($\pm 500\text{ ps}$).
+* **Hardware Counter**: **`10.00 MHz`**.
+
+### 2. Auxiliary FT8 Output: 14.074 000 MHz (CLK1)
+![14 MHz Scope Measurement](docs/scope_14mhz_ft8.png)
+
+* **Mean Period ($T_{\text{avg}}$)**: **`71.052 ns`** (Theoretical for 14.074000 MHz: $71.053\text{ ns}$, error: **$< 1\text{ ppm}$** / $< 14\text{ Hz}$).
+* **RMS Jitter ($\sigma / \text{Dev}$)**: **`100.81 ps`**.
+* **Hardware Counter**: **`14.07 MHz`**.
+
+### Measurement & Probing Tips
+* **Drive Strength**: Setting output drive to **`2 mA`** (`drive <clk> 2`) significantly reduces edge ringing and overshoot on breadboard interconnects compared to 8 mA.
+* **Ground Spring**: For frequencies above 10 MHz, use the short ground spring contact supplied with your probe instead of the standard 12 cm alligator ground lead to eliminate inductive ground-loop resonance (~145 MHz).
+
+---
+
 ## 💡 Practical Recommendations
 
 * **GPS Antenna**: The NEO-6M requires a clear view of the sky (place near a window for initial testing). The onboard PPS LED on the NEO-6M will only start blinking once a valid 3D GPS fix is acquired.
